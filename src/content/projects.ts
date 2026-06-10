@@ -114,7 +114,7 @@ export const PROJECTS: Project[] = [
       { value: '~370 ms', label: 'full 100k client-side sort' },
       { value: '15 min', label: 'server cache window' },
     ],
-    live: null,
+    live: 'https://pulse-analytics-six.vercel.app',
     code: 'https://github.com/rramirezgit/pulse-analytics',
     accent: 'from-violet-400 to-fuchsia-400',
   },
