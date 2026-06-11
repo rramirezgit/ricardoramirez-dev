@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SmoothScroll } from "@/shared/animation/SmoothScroll";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -57,7 +58,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-        {children}
+        <div className="hub-bg" aria-hidden />
+        <SmoothScroll>{children}</SmoothScroll>
+        <div className="hub-grain" aria-hidden />
       </body>
     </html>
   );

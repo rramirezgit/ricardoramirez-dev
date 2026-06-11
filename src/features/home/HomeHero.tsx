@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
-import { gsap } from 'gsap'
+import { gsap, SplitText } from '@/shared/animation/gsap'
 
 export function HomeHero() {
   const scope = useRef<HTMLElement>(null)
@@ -11,34 +11,50 @@ export function HomeHero() {
     () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-      gsap.from('[data-hero-stagger]', {
-        y: 28,
-        opacity: 0,
-        stagger: 0.12,
-        duration: 0.9,
-        ease: 'power3.out',
-      })
+      const split = SplitText.create('[data-hero-title]', { type: 'lines', mask: 'lines' })
+      const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+
+      timeline
+        .from('[data-hero-eyebrow]', { y: 16, opacity: 0, duration: 0.7 })
+        .from(split.lines, { yPercent: 110, stagger: 0.12, duration: 0.9 }, '-=0.3')
+        .from('[data-hero-sub]', { y: 20, opacity: 0, duration: 0.8 }, '-=0.5')
+        .from('[data-hero-cta] > *', { y: 14, opacity: 0, stagger: 0.08, duration: 0.6 }, '-=0.5')
+
+      return () => split.revert()
     },
     { scope }
   )
 
   return (
     <header ref={scope} className="mx-auto w-full max-w-5xl px-6 pt-28 pb-20">
-      <p data-hero-stagger className="text-sm tracking-[0.3em] text-zinc-500 uppercase">
-        Ricardo Ramirez · Buenos Aires, AR
-      </p>
-      <h1
-        data-hero-stagger
-        className="mt-6 max-w-3xl text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-tight text-zinc-50"
+      <div
+        data-hero-eyebrow
+        className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs tracking-wide text-zinc-400"
       >
-        Senior Frontend Developer building fast, accessible interfaces.
+        <span className="relative flex h-2 w-2">
+          <span className="status-dot absolute inline-flex h-full w-full rounded-full bg-emerald-400" style={{ animation: 'status-pulse 2s ease-in-out infinite' }} />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+        </span>
+        Open to remote roles · LATAM &amp; US
+      </div>
+
+      <h1
+        data-hero-title
+        className="mt-7 max-w-3xl text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-tight text-zinc-50"
+      >
+        Senior Frontend Developer building <span className="text-grad">fast, accessible</span>{' '}
+        interfaces.
       </h1>
-      <p data-hero-stagger className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-        React · Next.js · advanced TypeScript · TanStack. Eight years shipping SaaS products,
-        with an obsession for Core Web Vitals and interfaces that hold up under real data.
-        Open to remote roles across LATAM and the US.
+
+      <p
+        data-hero-sub
+        className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400"
+      >
+        React · Next.js · advanced TypeScript · TanStack. Eight years shipping SaaS products, with
+        an obsession for Core Web Vitals and interfaces that hold up under real data.
       </p>
-      <div data-hero-stagger className="mt-8 flex flex-wrap gap-4 text-sm">
+
+      <div data-hero-cta className="mt-9 flex flex-wrap gap-4 text-sm">
         <a
           href="https://github.com/rramirezgit"
           className="rounded-full border border-white/15 px-5 py-2.5 text-zinc-200 transition-colors hover:border-white/40"

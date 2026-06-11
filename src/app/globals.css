@@ -1,26 +1,124 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-accent-amber: #f5b14c;
+  --color-accent-rose: #e96a8d;
+  --color-accent-violet: #8b5cf6;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: #08080b;
+  color: #ededed;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+@keyframes hub-drift {
+  0% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, 2%, 0) scale(1.07);
+  }
+  100% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes hub-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.4);
+  }
+}
+
+.hub-bg {
+  position: fixed;
+  inset: -10%;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(36% 44% at 18% 22%, rgba(245, 177, 76, 0.1), transparent 62%),
+    radial-gradient(40% 48% at 82% 28%, rgba(233, 106, 141, 0.09), transparent 64%),
+    radial-gradient(54% 54% at 50% 92%, rgba(139, 92, 246, 0.1), transparent 60%);
+  filter: blur(70px) saturate(120%);
+  animation: hub-drift 26s ease-in-out infinite;
+}
+
+.hub-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+.text-grad {
+  background: linear-gradient(
+    104deg,
+    var(--color-accent-amber) 0%,
+    var(--color-accent-rose) 48%,
+    var(--color-accent-violet) 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: hub-shift 8s ease-in-out infinite;
+}
+
+.spotlight-card {
+  position: relative;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.06),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+::selection {
+  background: rgba(245, 177, 76, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-bg,
+  .text-grad,
+  .status-dot {
+    animation: none;
+  }
 }
