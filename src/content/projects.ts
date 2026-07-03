@@ -164,6 +164,52 @@ export const PROJECTS: Project[] = [
     code: 'https://github.com/rramirezgit/aurora-landing',
     accent: 'from-amber-400 to-rose-400',
   },
+  {
+    slug: 'spendwise',
+    name: 'Spendwise',
+    tagline: 'Shared monthly budget for two people — a real product in daily production use',
+    problem:
+      'Couples track shared money in chat threads and spreadsheets. Most expense trackers are single-user: shared costs, who-paid-what and settling up are afterthoughts bolted onto a personal ledger.',
+    solution:
+      'Two people, one monthly budget. Fixed-expense templates are instanced per month, each expense cycles its payer (me / partner / 50-50) with settlement math built into the same tab, personal daily spending stays informative-only, and a common savings fund plus month history complete the loop. Runtime ES/EN i18n and per-budget ARS/USD currency.',
+    stack: [
+      'Next.js 16',
+      'React 19',
+      'TypeScript',
+      'Tailwind CSS 4',
+      'Prisma 6',
+      'Neon Postgres',
+      'Auth.js v5',
+      'TanStack Query',
+      'Recharts',
+    ],
+    decisions: [
+      {
+        title: 'Polling instead of websockets',
+        detail:
+          'For a two-user app, a 5-second TanStack Query refetchInterval plus refetch-on-focus is indistinguishable from push and ships zero extra infrastructure. The seam is one provider swap away if sub-second sync is ever needed.',
+      },
+      {
+        title: 'Templates and instances for fixed expenses',
+        detail:
+          'FixedItem templates generate per-month BudgetExpense instances, so editing a template never rewrites history — every past month stays exactly as it was settled.',
+      },
+      {
+        title: 'Settlement lives where expenses are paid',
+        detail:
+          'Balance and liquidation are integrated into the Fixed tab instead of a separate screen: tapping the payer cycles me / partner / 50-50 and feeds the settlement math directly, so the answer to "who owes whom" is always one glance away.',
+      },
+    ],
+    metrics: [
+      { value: '2', label: 'people, one shared budget' },
+      { value: '5 s', label: 'sync via smart polling' },
+      { value: 'ES · EN', label: 'runtime i18n' },
+      { value: 'ARS · USD', label: 'per-budget currency' },
+    ],
+    live: 'https://spendwise-phi-orpin.vercel.app',
+    code: 'https://github.com/rramirezgit/spendwise',
+    accent: 'from-sky-400 to-indigo-400',
+  },
 ]
 
 export const CV_LINK = {

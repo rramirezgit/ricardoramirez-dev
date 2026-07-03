@@ -26,13 +26,20 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
   const project = getProject(slug)
   if (!project) notFound()
 
+  const index = PROJECTS.findIndex((entry) => entry.slug === project.slug)
+  const next = PROJECTS[(index + 1) % PROJECTS.length]
+
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-20">
+    <main className="mx-auto w-full max-w-3xl px-6 pt-28 pb-20">
       <Link href="/" className="text-sm text-zinc-500 hover:text-zinc-300">
         ← All work
       </Link>
 
       <header className="mt-8">
+        <div
+          aria-hidden
+          className={`mb-6 h-1 w-16 rounded-full bg-gradient-to-r ${project.accent}`}
+        />
         <h1 className="text-4xl font-semibold tracking-tight text-zinc-50">{project.name}</h1>
         <p className="mt-3 text-lg text-zinc-400">{project.tagline}</p>
         <div className="mt-6 flex flex-wrap gap-3 text-sm">
@@ -100,6 +107,26 @@ export default async function CaseStudyPage({ params }: CaseStudyProps) {
           ))}
         </ul>
       </Section>
+
+      <footer className="mt-16 border-t border-white/[0.06] pt-8">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <Link
+            href={`/work/${next.slug}`}
+            className="group text-sm text-zinc-400 transition-colors hover:text-zinc-100"
+          >
+            Next case study — <span className="font-medium text-zinc-200">{next.name}</span>{' '}
+            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
+          <a
+            href="mailto:rramirez.engineer@gmail.com"
+            className="rounded-full bg-zinc-100 px-5 py-2 text-sm font-medium text-zinc-950 hover:bg-white"
+          >
+            Get in touch
+          </a>
+        </div>
+      </footer>
     </main>
   )
 }

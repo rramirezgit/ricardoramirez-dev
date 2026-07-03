@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SmoothScroll } from "@/shared/animation/SmoothScroll";
+import { SiteNav } from "@/shared/SiteNav";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,13 +18,13 @@ const SITE_URL = "https://ricardoramirez-dev.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Ricardo Ramirez — Senior Frontend Developer",
+  title: "Ricardo Ramirez — Frontend Developer",
   description:
-    "Senior Frontend Developer specialized in React, Next.js, advanced TypeScript and the TanStack ecosystem. Case studies with real metrics: geospatial platforms, data-heavy dashboards and award-style animation work.",
+    "Frontend Developer specialized in React, Next.js, TypeScript and the TanStack ecosystem. Case studies with real metrics: geospatial platforms, data-heavy dashboards, animation work and a product in daily use.",
   openGraph: {
-    title: "Ricardo Ramirez — Senior Frontend Developer",
+    title: "Ricardo Ramirez — Frontend Developer",
     description:
-      "Case studies with real metrics: geospatial platforms, data-heavy dashboards and award-style animation work.",
+      "Case studies with real metrics: geospatial platforms, data-heavy dashboards, animation work and a product in daily use.",
     url: SITE_URL,
     siteName: "Ricardo Ramirez",
     type: "website",
@@ -34,7 +35,7 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Ricardo Ramirez",
-  jobTitle: "Senior Frontend Developer",
+  jobTitle: "Frontend Developer",
   url: SITE_URL,
   sameAs: [
     "https://github.com/rramirezgit",
@@ -59,6 +60,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <div className="hub-bg" aria-hidden />
+        <SiteNav />
         <SmoothScroll>{children}</SmoothScroll>
         <div className="hub-grain" aria-hidden />
       </body>

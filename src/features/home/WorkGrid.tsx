@@ -6,6 +6,13 @@ import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '@/shared/animation/gsap'
 import { PROJECTS, CV_LINK } from '@/content/projects'
 
+const BASELINE_STACK = new Set(['React 19', 'TypeScript', 'Next.js 16'])
+
+function distinctiveStack(stack: string[], count: number) {
+  const distinctive = stack.filter((item) => !BASELINE_STACK.has(item))
+  return (distinctive.length >= count ? distinctive : stack).slice(0, count)
+}
+
 export function WorkGrid() {
   const scope = useRef<HTMLElement>(null)
   const [featured, ...rest] = PROJECTS
@@ -24,11 +31,12 @@ export function WorkGrid() {
 
       gsap.from('[data-card]', {
         y: 40,
-        opacity: 0,
+        autoAlpha: 0,
         stagger: 0.1,
         duration: 0.8,
         ease: 'power3.out',
-        scrollTrigger: { trigger: '[data-grid]', start: 'top 78%', once: true },
+        clearProps: 'all',
+        scrollTrigger: { trigger: '[data-grid]', start: 'top 90%', once: true },
       })
 
       ScrollTrigger.refresh()
@@ -63,6 +71,7 @@ export function WorkGrid() {
           <ProjectCardBody
             name={featured.name}
             tagline={featured.tagline}
+            stack={distinctiveStack(featured.stack, 4)}
             metrics={featured.metrics.slice(0, 3).map((metric) => `${metric.value} ${metric.label}`)}
           />
         </Link>
@@ -82,6 +91,7 @@ export function WorkGrid() {
             <ProjectCardBody
               name={project.name}
               tagline={project.tagline}
+              stack={distinctiveStack(project.stack, 3)}
               metrics={project.metrics.slice(0, 2).map((metric) => `${metric.value} ${metric.label}`)}
             />
           </Link>
@@ -105,10 +115,12 @@ export function WorkGrid() {
 function ProjectCardBody({
   name,
   tagline,
+  stack,
   metrics,
 }: {
   name: string
   tagline: string
+  stack?: string[]
   metrics: string[]
 }) {
   return (
@@ -120,7 +132,19 @@ function ProjectCardBody({
         </span>
       </div>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-zinc-400">{tagline}</p>
-      <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-1">
+      {stack && (
+        <ul className="mt-5 flex flex-wrap gap-1.5">
+          {stack.map((item) => (
+            <li
+              key={item}
+              className="rounded-full border border-white/[0.08] bg-white/[0.02] px-2.5 py-0.5 text-[11px] text-zinc-400"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      )}
+      <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
         {metrics.map((metric) => (
           <li key={metric} className="text-xs tracking-wide text-zinc-500 tabular-nums">
             {metric}

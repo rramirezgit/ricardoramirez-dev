@@ -1,19 +1,9 @@
 import { ImageResponse } from 'next/og'
-import { getProject } from '@/content/projects'
 
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-export default async function OpengraphImage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-  const project = getProject(slug)
-  const name = project?.name ?? 'Ricardo Ramirez'
-  const tagline = project?.tagline ?? 'Frontend Developer'
-
+export default function OpengraphImage() {
   return new ImageResponse(
     (
       <div
@@ -30,11 +20,13 @@ export default async function OpengraphImage({
         }}
       >
         <div style={{ fontSize: 26, color: '#a1a1aa', letterSpacing: 4 }}>
-          RICARDO RAMIREZ · CASE STUDY
+          RICARDORAMIREZ.DEV
         </div>
-        <div style={{ fontSize: 88, fontWeight: 700, marginTop: 16 }}>{name}</div>
-        <div style={{ fontSize: 30, color: '#d4d4d8', marginTop: 12, maxWidth: 980 }}>
-          {tagline}
+        <div style={{ fontSize: 76, fontWeight: 700, marginTop: 16, maxWidth: 1000 }}>
+          Frontend developer building fast, accessible interfaces
+        </div>
+        <div style={{ fontSize: 30, color: '#d4d4d8', marginTop: 14 }}>
+          React · Next.js · TypeScript · TanStack — case studies with real metrics
         </div>
       </div>
     ),

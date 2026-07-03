@@ -26,7 +26,7 @@ export function HomeHero() {
   )
 
   return (
-    <header ref={scope} className="mx-auto w-full max-w-5xl px-6 pt-28 pb-20">
+    <header ref={scope} className="mx-auto w-full max-w-5xl px-6 pt-36 pb-20">
       <div
         data-hero-eyebrow
         className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs tracking-wide text-zinc-400"
@@ -35,14 +35,14 @@ export function HomeHero() {
           <span className="status-dot absolute inline-flex h-full w-full rounded-full bg-emerald-400" style={{ animation: 'status-pulse 2s ease-in-out infinite' }} />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
         </span>
-        Open to remote roles · LATAM &amp; US
+        Open to remote LATAM roles · Buenos Aires, AR
       </div>
 
       <h1
         data-hero-title
         className="mt-7 max-w-3xl text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-tight text-zinc-50"
       >
-        Senior Frontend Developer building <span className="text-grad">fast, accessible</span>{' '}
+        Frontend developer building <span className="text-grad">fast, accessible</span>{' '}
         interfaces.
       </h1>
 
@@ -50,8 +50,8 @@ export function HomeHero() {
         data-hero-sub
         className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400"
       >
-        React · Next.js · advanced TypeScript · TanStack. Eight years shipping SaaS products, with
-        an obsession for Core Web Vitals and interfaces that hold up under real data.
+        React · Next.js · TypeScript · TanStack. Eight years shipping SaaS products, with an
+        obsession for Core Web Vitals and interfaces that hold up under real data.
       </p>
 
       <div data-hero-cta className="mt-9 flex flex-wrap gap-4 text-sm">
