@@ -28,7 +28,7 @@ export const PROJECTS: Project[] = [
     name: 'GeoInsights',
     tagline: 'Geospatial visualization platform — 6 interactive map demos over Argentina',
     problem:
-      'Geospatial frontends are a specialized niche: WebGL map engines, large datasets, spatial math and cinematic camera work rarely coexist in one well-architected codebase that stays maintainable.',
+      'Teams operating fleets, farmland or infrastructure need geospatial dashboards to make day-to-day decisions — but WebGL map engines, large datasets, spatial math and cinematic camera work rarely coexist in one well-architected codebase that stays maintainable past the first demo.',
     solution:
       'A single-page application with six self-contained demos — agricultural heatmaps, real-time fleet tracking, satellite comparison, polygon drawing with instant spatial analysis, and a scroll-driven story map. Each demo owns its page, map layers, controls and store slice, so demos can be added or removed without cross-cutting changes.',
     stack: [
@@ -155,10 +155,10 @@ export const PROJECTS: Project[] = [
       },
     ],
     metrics: [
+      { value: '182 ms', label: 'LCP (CPU throttled 4×)' },
+      { value: '0.00', label: 'CLS on load' },
       { value: '0', label: 'external 3D assets' },
-      { value: '4', label: 'lamp parts in the exploded view' },
       { value: '100%', label: 'content available with reduced motion' },
-      { value: '1.5', label: 'max device pixel ratio cap' },
     ],
     live: 'https://aurora-landing-kappa.vercel.app',
     code: 'https://github.com/rramirezgit/aurora-landing',
@@ -201,7 +201,7 @@ export const PROJECTS: Project[] = [
       },
     ],
     metrics: [
-      { value: '2', label: 'people, one shared budget' },
+      { value: '0', label: 'floating-point rounding errors (amounts stored as cents)' },
       { value: '5 s', label: 'sync via smart polling' },
       { value: 'ES · EN', label: 'runtime i18n' },
       { value: 'ARS · USD', label: 'per-budget currency' },
