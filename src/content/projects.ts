@@ -26,11 +26,11 @@ export const PROJECTS: Project[] = [
   {
     slug: 'geoinsights',
     name: 'GeoInsights',
-    tagline: 'Geospatial visualization platform — 6 interactive map demos over Argentina',
+    tagline: 'Geospatial visualization platform — 7 interactive map demos over Argentina',
     problem:
       'Teams operating fleets, farmland or infrastructure need geospatial dashboards to make day-to-day decisions — but WebGL map engines, large datasets, spatial math and cinematic camera work rarely coexist in one well-architected codebase that stays maintainable past the first demo.',
     solution:
-      'A single-page application with six self-contained demos — agricultural heatmaps, real-time fleet tracking, satellite comparison, polygon drawing with instant spatial analysis, and a scroll-driven story map. Each demo owns its page, map layers, controls and store slice, so demos can be added or removed without cross-cutting changes.',
+      'A single-page application with seven self-contained demos — agricultural heatmaps, real-time fleet tracking, live oil & gas well monitoring across the Argentine basins, satellite comparison, polygon drawing with instant spatial analysis, and a scroll-driven story map. Each demo owns its page, map layers, controls and store slice, so demos can be added or removed without cross-cutting changes.',
     stack: [
       'React 19',
       'TypeScript',
@@ -60,16 +60,70 @@ export const PROJECTS: Project[] = [
         detail:
           'Stores, spatial math, simulation and validators are unit-tested; Mapbox and deck.gl are mocked at the module boundary and the real canvas is covered by Playwright smoke tests in CI.',
       },
+      {
+        title: 'Mercator forced over Mapbox GL v3 globe default',
+        detail:
+          'Mapbox GL v3 renders every style on a globe projection by default, while deck.gl projects overlays in Web Mercator — so data points visibly drifted off their coordinates during panning. Pinning projection="mercator" on the map keeps both engines in the same coordinate space.',
+      },
     ],
     metrics: [
       { value: '100', label: 'Lighthouse SEO' },
       { value: '98', label: 'Lighthouse a11y' },
-      { value: '70 + 7', label: 'unit + e2e tests in CI' },
-      { value: '6', label: 'interactive demos' },
+      { value: '84 + 9', label: 'unit + e2e tests in CI' },
+      { value: '7', label: 'interactive demos' },
     ],
     live: 'https://geoinsights-ten.vercel.app',
     code: 'https://github.com/rramirezgit/GeoInsights',
     accent: 'from-emerald-400 to-cyan-400',
+  },
+  {
+    slug: 'wells-arcgis',
+    name: 'Wells',
+    tagline: 'Argentine oil & gas well viewer — Vue 3 + the ArcGIS Maps SDK',
+    problem:
+      'Integrating a full GIS engine into a modern reactive framework is where most map apps quietly break: the SDK ships its own reactivity and object graph, and wrapping it in the framework’s proxies destroys performance in ways that only surface at scale. Add vendor web components living in shadow DOM and basemaps that demand API keys, and a "simple map" becomes an architecture problem.',
+    solution:
+      'A well viewer over the five productive Argentine basins built with Vue 3 and the ArcGIS Maps SDK for JavaScript 5.1. Points are styled by resource and sized by output; a side panel lists them and stays in sync with the map both ways; filters compile to a SQL clause applied on the layer itself. It ships the SDK’s new web components — legend, layer list, basemap gallery, home, scale bar, fullscreen — and six custom basemaps that need no credentials. Well data is deterministically simulated in the browser and labelled as such.',
+    stack: [
+      'Vue 3.5',
+      'TypeScript',
+      'Vite 7',
+      'Pinia',
+      'ArcGIS Maps SDK 5.1',
+      '@arcgis/map-components',
+      'Calcite',
+    ],
+    decisions: [
+      {
+        title: 'The MapView never enters a Vue ref',
+        detail:
+          'Map, view and layers live in shallowRef, never ref or reactive. Wrapping the SDK’s Accessor graph in Vue’s proxy breaks its change tracking and tanks performance — so the reactive boundary stops at the reference, not the object.',
+      },
+      {
+        title: 'Two reactivity systems, one per direction',
+        detail:
+          'Changes born in the map (zoom, updating) are observed with the SDK’s reactiveUtils and copied into refs for the template; changes born in the UI (filters, selection) use Vue’s watch to write onto SDK properties. Mixing the two is where the subtle bugs come from.',
+      },
+      {
+        title: 'Filtering happens on the layer, not the array',
+        detail:
+          'The store exposes a definitionExpression — a SQL clause assigned to the FeatureLayer. The "features in layer" counter comes from queryFeatureCount, so the layer confirms the filter, not Vue state. Against a real FeatureServer this means the server does the filtering and no extra features travel.',
+      },
+      {
+        title: 'Six basemaps, zero API keys, themed through shadow DOM',
+        detail:
+          'Esri’s catalog basemaps need a key, so the gallery is fed a LocalBasemapsSource of six own basemaps — CARTO XYZ tiles via WebTileLayer, public ArcGIS MapServers via TileLayer. The components live in shadow DOM, themed by redefining Calcite tokens and, where those fall short, an adopted stylesheet inside the shadow root.',
+      },
+    ],
+    metrics: [
+      { value: '280', label: 'wells across 5 basins' },
+      { value: '6', label: 'SDK web components' },
+      { value: '6', label: 'basemaps, no API key' },
+      { value: 'SQL', label: 'server-side layer filtering' },
+    ],
+    live: 'https://vue-arcgis-demo.vercel.app',
+    code: 'https://github.com/rramirezgit/vue-arcgis-demo',
+    accent: 'from-cyan-400 to-blue-500',
   },
   {
     slug: 'pulse',
@@ -163,52 +217,6 @@ export const PROJECTS: Project[] = [
     live: 'https://aurora-landing-kappa.vercel.app',
     code: 'https://github.com/rramirezgit/aurora-landing',
     accent: 'from-amber-400 to-rose-400',
-  },
-  {
-    slug: 'spendwise',
-    name: 'Spendwise',
-    tagline: 'Shared monthly budget for two people — a real product in daily production use',
-    problem:
-      'Couples track shared money in chat threads and spreadsheets. Most expense trackers are single-user: shared costs, who-paid-what and settling up are afterthoughts bolted onto a personal ledger.',
-    solution:
-      'Two people, one monthly budget. Fixed-expense templates are instanced per month, each expense cycles its payer (me / partner / 50-50) with settlement math built into the same tab, personal daily spending stays informative-only, and a common savings fund plus month history complete the loop. Runtime ES/EN i18n and per-budget ARS/USD currency.',
-    stack: [
-      'Next.js 16',
-      'React 19',
-      'TypeScript',
-      'Tailwind CSS 4',
-      'Prisma 6',
-      'Neon Postgres',
-      'Auth.js v5',
-      'TanStack Query',
-      'Recharts',
-    ],
-    decisions: [
-      {
-        title: 'Polling instead of websockets',
-        detail:
-          'For a two-user app, a 5-second TanStack Query refetchInterval plus refetch-on-focus is indistinguishable from push and ships zero extra infrastructure. The seam is one provider swap away if sub-second sync is ever needed.',
-      },
-      {
-        title: 'Templates and instances for fixed expenses',
-        detail:
-          'FixedItem templates generate per-month BudgetExpense instances, so editing a template never rewrites history — every past month stays exactly as it was settled.',
-      },
-      {
-        title: 'Settlement lives where expenses are paid',
-        detail:
-          'Balance and liquidation are integrated into the Fixed tab instead of a separate screen: tapping the payer cycles me / partner / 50-50 and feeds the settlement math directly, so the answer to "who owes whom" is always one glance away.',
-      },
-    ],
-    metrics: [
-      { value: '0', label: 'floating-point rounding errors (amounts stored as cents)' },
-      { value: '5 s', label: 'sync via smart polling' },
-      { value: 'ES · EN', label: 'runtime i18n' },
-      { value: 'ARS · USD', label: 'per-budget currency' },
-    ],
-    live: 'https://spendwise-phi-orpin.vercel.app',
-    code: 'https://github.com/rramirezgit/spendwise',
-    accent: 'from-sky-400 to-indigo-400',
   },
 ]
 
