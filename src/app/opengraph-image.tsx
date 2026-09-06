@@ -23,10 +23,10 @@ export default function OpengraphImage() {
           RICARDORAMIREZ.DEV
         </div>
         <div style={{ fontSize: 76, fontWeight: 700, marginTop: 16, maxWidth: 1000 }}>
-          Frontend developer building fast, accessible interfaces
+          Frontend developer building fast, map-driven interfaces
         </div>
         <div style={{ fontSize: 30, color: '#d4d4d8', marginTop: 14 }}>
-          React · Next.js · TypeScript · TanStack — case studies with real metrics
+          Vue.js · GIS · React · Next.js · TypeScript — case studies with real metrics
         </div>
       </div>
     ),

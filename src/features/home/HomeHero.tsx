@@ -42,7 +42,7 @@ export function HomeHero() {
         data-hero-title
         className="mt-7 max-w-3xl text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05] font-semibold tracking-tight text-zinc-50"
       >
-        Frontend developer building <span className="text-grad">fast, accessible</span>{' '}
+        Frontend developer building <span className="text-grad">fast, map-driven</span>{' '}
         interfaces.
       </h1>
 
@@ -50,8 +50,9 @@ export function HomeHero() {
         data-hero-sub
         className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400"
       >
-        React · Next.js · TypeScript · TanStack. Eight years shipping SaaS products, with an
-        obsession for Core Web Vitals and interfaces that hold up under real data.
+        Vue.js · GIS · React · Next.js · TypeScript. Eight years shipping SaaS products and
+        real-time geospatial platforms, with an obsession for Core Web Vitals and interfaces
+        that hold up under real data.
       </p>
 
       <div data-hero-cta className="mt-9 flex flex-wrap gap-4 text-sm">

@@ -18,11 +18,11 @@ const SITE_URL = "https://ricardoramirez-dev.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Ricardo Ramirez — Frontend Developer",
+  title: "Ricardo Ramirez — Senior Frontend Developer · Vue.js & GIS",
   description:
-    "Frontend Developer specialized in React, Next.js, TypeScript and the TanStack ecosystem. Case studies with real metrics: geospatial platforms, data-heavy dashboards, animation work and a product in daily use.",
+    "Senior Frontend Developer specialized in Vue.js and geospatial (GIS) platforms — real-time monitoring with ArcGIS API for JavaScript — plus React, Next.js and TypeScript. Case studies with real metrics: geospatial platforms, data-heavy dashboards, animation work and a product in daily use.",
   openGraph: {
-    title: "Ricardo Ramirez — Frontend Developer",
+    title: "Ricardo Ramirez — Senior Frontend Developer · Vue.js & GIS",
     description:
       "Case studies with real metrics: geospatial platforms, data-heavy dashboards, animation work and a product in daily use.",
     url: SITE_URL,
@@ -35,13 +35,13 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Ricardo Ramirez",
-  jobTitle: "Frontend Developer",
+  jobTitle: "Senior Frontend Developer",
   url: SITE_URL,
   sameAs: [
     "https://github.com/rramirezgit",
     "https://linkedin.com/in/ricardoramirez-",
   ],
-  knowsAbout: ["React", "Next.js", "TypeScript", "TanStack", "Web Performance"],
+  knowsAbout: ["Vue.js", "GIS", "ArcGIS API for JavaScript", "React", "Next.js", "TypeScript", "TanStack", "Web Performance"],
 };
 
 export default function RootLayout({
